@@ -1,0 +1,11 @@
+README.md
+pom.xml
+ru/mai/shop/delivery/generated/api/ApiUtil.java
+ru/mai/shop/delivery/generated/api/DeliveryApi.java
+ru/mai/shop/delivery/generated/dto/DeliveryDto.java
+ru/mai/shop/delivery/generated/dto/NewDeliveryRequest.java
+ru/mai/shop/delivery/generated/dto/Pageable.java
+ru/mai/shop/delivery/generated/dto/PagedDeliveriesResponse.java
+ru/mai/shop/delivery/generated/dto/ProductDto.java
+ru/mai/shop/delivery/generated/dto/ProductTypeDto.java
+ru/mai/shop/delivery/generated/dto/Sort.java

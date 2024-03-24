@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/delivery_db
+    username: local
+    password: local
+
+integration:
+  sale:
+    url: http://localhost:8081/shop/sales/api

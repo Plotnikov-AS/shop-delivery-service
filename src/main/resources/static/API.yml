@@ -1,0 +1,169 @@
+openapi: 3.0.3
+info:
+  title: Shop Delivery Service
+  description: Доставка
+  version: v0.0.1
+servers:
+  - url: http://localhost:8082/shop/delivery/api/
+    description: LOCAL
+tags:
+  - name: Delivery
+    description: Доставка
+paths:
+  /v1/deliveries/:
+    post:
+      tags:
+        - Delivery
+      description: Новая доставка
+      operationId: createNewDelivery
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewDeliveryRequest'
+      responses:
+        200:
+          description: Успешный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryDto'
+    get:
+      x-spring-paginated: true
+      tags:
+        - Delivery
+      operationId: getAllDeliveries
+      description: Список всех доставок
+      responses:
+        200:
+          description: Успешный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedDeliveriesResponse'
+  /v1/deliveries/{id}:
+    get:
+      tags:
+        - Delivery
+      operationId: getDeliveryById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: Успешный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryDto'
+
+components:
+  schemas:
+    NewDeliveryRequest:
+      type: object
+      description: Новый заказ на доставку
+      properties:
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductDto'
+        address:
+          type: string
+          description: Адрес доставки
+    DeliveryDto:
+      type: object
+      description: Заказ на доставку
+      properties:
+        id:
+          type: string
+          format: uuid
+        saleId:
+          type: string
+          format: uuid
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductDto'
+    PagedDeliveriesResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryDto'
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+        totalElements:
+          type: integer
+          format: int64
+        last:
+          type: boolean
+        totalPages:
+          type: integer
+        number:
+          type: integer
+        size:
+          type: integer
+        sort:
+          $ref: '#/components/schemas/Sort'
+        numberOfElements:
+          type: integer
+        first:
+          type: boolean
+        empty:
+          type: boolean
+    ProductDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          $ref: '#/components/schemas/ProductTypeDto'
+        price:
+          type: number
+          description: Цена товара за единицу
+        count:
+          type: integer
+          description: Количество товара
+        place:
+          type: string
+          description: Место хранения
+    ProductTypeDto:
+      type: object
+      description: Тип продукта
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    Pageable:
+      type: object
+      properties:
+        sort:
+          $ref: '#/components/schemas/Sort'
+        offset:
+          type: integer
+        pageSize:
+          type: integer
+        pageNumber:
+          type: integer
+        paged:
+          type: boolean
+        unpaged:
+          type: boolean
+    Sort:
+      type: object
+      properties:
+        sorted:
+          type: boolean
+        unsorted:
+          type: boolean
+        empty:
+          type: boolean
